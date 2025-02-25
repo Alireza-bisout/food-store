@@ -1,3 +1,4 @@
+import DetailsPage from '@/components/template/DetailsPage/DetailsPage'
 import { useRouter } from 'next/router'
 import React from 'react'
 
@@ -10,8 +11,8 @@ function Details({ data }) {
     }
 
     return (
-        <div> Details</div>
-    )
+        <DetailsPage {... data}/>
+    ) 
 }
 
 export default Details
