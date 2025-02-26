@@ -1,12 +1,19 @@
 import Card from "@/components/module/Card/Card";
 import styles from "./CategoriesPage.module.css";
-import { useState } from "react";
-import { router } from "next/router";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 
 function CategoriesPage({ data }) {
+  const router = useRouter()
   const [query, setQuery] = useState({ difficulty: "", time: "" });
 
+  useEffect(() => {
+    const { difficulty, time } = router.query
+    if (query.difficulty !== difficulty || query.time !== time) {
+      setQuery({ difficulty, time })
+    }
+  }, [])
 
   const changeHandler = (e) => {
     setQuery({ ...query, [e.target.name]: e.target.value });
@@ -33,11 +40,16 @@ function CategoriesPage({ data }) {
           </select>
           <button onClick={searchHandler}>Search</button>
         </div>
-        <div className={styles.cards}>
 
-          {/* <Card /> */}
+        <div className={styles.cards}>
+          {!data.length ? <img src="/images/search.png" alt="category" /> : null}
+          {
+            data.map((food) => (<Card key={food.id} {...food} />))
+          }
+
 
         </div>
+
       </div>
     </div>
   );
